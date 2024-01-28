@@ -13,7 +13,7 @@ npm install
 ### Run the project
 
 ```sh
-npm runb dev
+npm run dev
 ```
 
 ---
