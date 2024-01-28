@@ -1,13 +1,17 @@
+import { formatCurrency } from '@/utils/formatters'
 import useExpenses from '../../hooks/useExpenses'
 import { DonutChart } from '@tremor/react'
 
 export function ExpensesChart() {
-  const { expenses } = useExpenses()
+  const { totalByCategory } = useExpenses()
 
-  const groupedExpenses = () => {
-    if (!expenses) return []
-    // return expenses.map(())
-  }
-
-  return <DonutChart data={expenses ?? []} index="category" category="amount" />
+  const valueFormatter = (value: number) => formatCurrency(value)
+  return (
+    <DonutChart
+      valueFormatter={valueFormatter}
+      data={totalByCategory}
+      index="category"
+      category="amount"
+    />
+  )
 }

@@ -5,10 +5,16 @@ import useExpenses from '@/hooks/useExpenses'
 import { createPortal } from 'react-dom'
 import { ExpenseDialog } from '../ExpenseDialog/ExpenseDialog'
 import { useExpenseDialog } from '@/hooks/useExpenseDialog'
+import { Expense } from '@/types/expenses.type'
 
 export function ExpensesTable() {
-  const { expenses, handleDelete } = useExpenses()
+  const { expenses, handleDelete, updateExpense } = useExpenses()
   const dialog = useExpenseDialog()
+
+  const handleSave = (expense: Expense) => {
+    updateExpense(expense)
+    dialog.handleClose()
+  }
 
   return (
     <section className="w-full">
@@ -25,7 +31,15 @@ export function ExpensesTable() {
           ))}
         </TableBody>
       </Table>
-      {createPortal(<ExpenseDialog />, document.body)}
+      {createPortal(
+        <ExpenseDialog
+          open={dialog.open}
+          expense={dialog.expense}
+          onClose={dialog.handleClose}
+          onSave={handleSave}
+        />,
+        document.body
+      )}
     </section>
   )
 }

@@ -1,10 +1,19 @@
-import { useExpenseDialogStore } from '@/store/expenseDialogStore'
+import { Expense } from '@/types/expenses.type'
+import { useState } from 'react'
 
 export function useExpenseDialog() {
-  const open = useExpenseDialogStore((state) => state.open)
-  const expense = useExpenseDialogStore((state) => state.expense)
-  const handleClose = useExpenseDialogStore((state) => state.closeExpenseDialog)
-  const handleOpen = useExpenseDialogStore((state) => state.openExpenseDialog)
+  const [open, setOpen] = useState(false)
+  const [expense, setExpense] = useState<Expense | null>(null)
+  const handleClose = () => {
+    setOpen(false)
+    setExpense(null)
+  }
+  const handleOpen = (expense?: Expense) => {
+    setOpen(true)
+    if (expense) {
+      setExpense(expense)
+    }
+  }
 
   return {
     open,
